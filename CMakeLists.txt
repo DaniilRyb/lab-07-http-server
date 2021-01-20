@@ -53,11 +53,10 @@ target_link_libraries(tests
         Beast::Beast
         Boost::filesystem
         Boost::thread
+        GTest::gmock_main
         nlohmann_json::nlohmann_json
         )
         
-target_link_libraries(tests PRIVATE GTest::gtest_main suggestion)
-
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
 
@@ -74,8 +73,8 @@ if (BUILD_COVERAGE)
   set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
   list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
   find_package(codecov)
-  enable_project_coverage(suggestion)
+  enable_project_coverage(template)
   enable_project_coverage(tests)
   list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
   coverage_evaluate()
-endif ()
+endif()
