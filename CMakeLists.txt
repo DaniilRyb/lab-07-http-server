@@ -40,15 +40,18 @@ find_package(nlohmann_json CONFIG REQUIRED)
 add_library(template STATIC
         # enum your files and delete this comment
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/source.cpp
+        sources/JsonStorage.cpp
+        sources/suggestions.cpp
 
         )
 
 add_executable(tests
-        ${CMAKE_CURRENT_SOURCE_DIR}/
-        #tests/test.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
         sources/source.cpp
         sources/JsonStorage.cpp
         sources/suggestions.cpp
+        include/JsonStorage.hpp
+        include/suggestions.hpp
         )
 
 target_include_directories(template
@@ -74,7 +77,7 @@ target_link_libraries(tests
 enable_testing()
 add_test(NAME unit_tests COMMAND tests)
 
-if(BUILD_COVERAGE)
+if (BUILD_COVERAGE)
   function(ENABLE_PROJECT_COVERAGE PROJECT)
     target_compile_options(${PROJECT} PRIVATE --coverage)
     target_link_libraries(${PROJECT} --coverage)
@@ -89,4 +92,4 @@ if(BUILD_COVERAGE)
   enable_project_coverage(tests)
   list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
   coverage_evaluate()
-endif()
+endif ()
